@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class Test {
     public static void main(String[] args) {
-
+        testJsonUtil();
     }
 
     public void testProtostuffUtil(){
@@ -40,7 +40,7 @@ public class Test {
         System.out.println(students.toString());
     }
 
-    public void testJsonUtil(){
+    public static void testJsonUtil(){
         Student s = new Student();
         s.setId(100);
         s.setName("lewis");
