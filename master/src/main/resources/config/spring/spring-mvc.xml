@@ -12,6 +12,11 @@
         <mvc:argument-resolvers>
             <bean class="com.lewis.master.common.core.JsonArgumentsResolver"></bean>
         </mvc:argument-resolvers>
+        <mvc:return-value-handlers>
+            <bean class="com.lewis.master.common.core.ResponseJsonReturnValueHandler">
+                <property name="httpMessageConverter" ref="jackson2HttpMessageConverter"/>
+            </bean>
+        </mvc:return-value-handlers>
     </mvc:annotation-driven>
     <mvc:resources mapping="/static/**" location="/static/"/>
 
@@ -20,19 +25,20 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!--<bean class="com.lewis.master.common.core.RequestMappingHandlerPostProcessor">
-        <property name="removedArgumentResolvers" >
+    <bean class="com.lewis.master.common.core.RequestMappingHandlerPostProcessor">
+       <!-- <property name="removedArgumentResolvers" >
             <list>
                 <value>org.springframework.web.method.annotation.MapMethodProcessor</value>
             </list>
-        </property>
+        </property>-->
         <property name="removedReturnValueHandlers">
             <list>
-                <value>org.springframework.web.servlet.mvc.method.annotation.ViewNameMethodReturnValueHandler</value>
-                <value>org.springframework.web.method.annotation.MapMethodProcessor</value>
+                <!--<value>org.springframework.web.servlet.mvc.method.annotation.ViewNameMethodReturnValueHandler</value>-->
+               <!-- <value>org.springframework.web.method.annotation.MapMethodProcessor</value>-->
             </list>
         </property>
     </bean>
--->
+
+    <bean id="jackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
 
 </beans>

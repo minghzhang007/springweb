@@ -1,11 +1,13 @@
 package com.lewis.master.controller;
 
 import com.lewis.master.common.anno.Json;
-import com.lewis.master.common.utils.JsonUtil;
+import com.lewis.master.common.anno.ResponseJson;
 import com.lewis.master.domain.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/11/3.
@@ -21,9 +23,12 @@ public class HelloController {
     }
 
     @RequestMapping("/student")
-    @ResponseBody
-    public String testJson(@Json Student student){
-
-        return JsonUtil.toString(student);
+    @ResponseJson
+    public Student testJson(@Json Student student){
+        List<String> hobbies = new LinkedList<String>();
+        hobbies.add("singing");
+        hobbies.add("dancing");
+        hobbies.add("reading");
+        return student;
     }
 }
