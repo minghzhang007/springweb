@@ -3,9 +3,10 @@ package com.lewis.master.controller;
 import com.lewis.master.common.anno.Json;
 import com.lewis.master.common.anno.ResponseJson;
 import com.lewis.master.domain.Student;
+import com.lewis.master.service.IHelloService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,6 +16,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/hello")
 public class HelloController {
+
+    @Resource
+    private IHelloService helloService;
+
 
     @RequestMapping("/say")
     public String sayHello(String name){
@@ -29,6 +34,13 @@ public class HelloController {
         hobbies.add("singing");
         hobbies.add("dancing");
         hobbies.add("reading");
+        return student;
+    }
+
+    @RequestMapping("/get")
+    @ResponseJson
+    public Student getStudent(){
+        Student student = helloService.getStudent(100);
         return student;
     }
 }
