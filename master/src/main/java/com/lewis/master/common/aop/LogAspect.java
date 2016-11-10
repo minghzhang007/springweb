@@ -24,7 +24,7 @@ public class LogAspect {
     private Logger LOG = LoggerFactory.getLogger(LogAspect.class);
 
     @Around(value = "@annotation(logAnno)", argNames = "joinPoint,logAnno")
-    public void doLog(ProceedingJoinPoint joinPoint, LogAnno logAnno) {
+    public Object doLog(ProceedingJoinPoint joinPoint, LogAnno logAnno) {
         Signature signature = joinPoint.getSignature();
         Class returnType = null;
         if (signature != null && signature instanceof MethodSignature) {
@@ -33,13 +33,14 @@ public class LogAspect {
         }
         boolean alreadyDoLogRequestParam = false;
         StringBuilder sb = new StringBuilder();
+        Object returnResult = null;
         try {
             String className = signature.getDeclaringTypeName().substring(signature.getDeclaringTypeName().lastIndexOf(".") + 1);
             sb.append(className)
                     .append(".")
                     .append(signature.getName());
             long beginTime = System.currentTimeMillis();
-            Object result = joinPoint.proceed();
+            returnResult = joinPoint.proceed();
             long costTime = System.currentTimeMillis() - beginTime;
             if (costTime > logAnno.doLogReqParamGreaterCostTime()) {
                 if (ArrayUtil.isNotEmpty(joinPoint.getArgs())) {
@@ -53,8 +54,8 @@ public class LogAspect {
             if (returnType != null) {
                 //返回值为ResponseVo类型
                 if (ResponseVo.class.isAssignableFrom(returnType)) {
-                    if (result != null) {
-                        ResponseVo resultVo = (ResponseVo) result;
+                    if (returnResult != null) {
+                        ResponseVo resultVo = (ResponseVo) returnResult;
                         if (resultVo.getData() == null) {
                             doLogWhenReturnResultIsNull(joinPoint, alreadyDoLogRequestParam, sb);
                         }
@@ -64,11 +65,12 @@ public class LogAspect {
                 }
                 //返回值为自定义类型
                 else if(returnType != void.class){
-                    if (result == null) {
+                    if (returnResult == null) {
                         doLogWhenReturnResultIsNull(joinPoint, alreadyDoLogRequestParam, sb);
                     }
                 }
             }
+
         } catch (Throwable throwable) {
             sb.append(",occur error ")
                     .append(throwable.toString())
@@ -82,6 +84,7 @@ public class LogAspect {
         }
         LOG.error(sb.toString());
         System.out.println(sb.toString());
+        return returnResult;
     }
 
     private void doLogWhenReturnResultIsNull(ProceedingJoinPoint joinPoint, boolean alreadyDoLogRequestParam, StringBuilder sb) {

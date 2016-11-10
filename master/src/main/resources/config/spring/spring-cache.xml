@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!--最大空闲连接数-->
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <!--/最小空闲连接数-->
+        <property name="minIdle" value="${redis.minIdle}" />
+        <!--最大连接数-->
+        <property name="maxTotal" value="${redis.maxTotal}"/>
+        <!--获取连接时的最大等待毫秒数(如果设置为阻塞时BlockWhenExhausted),如果超时就抛异常, 小于零:阻塞不确定的时间,  默认-1-->
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
+        <!--在获取连接的时候检查有效性, 默认false  如果为true，则得到的jedis实例均是可用的-->
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+        <property name="testOnReturn" value="${redis.testOnReturn}"/>
+        <property name="testOnCreate" value="${redis.testOnCreate}"/>
+        <!--在空闲时检查有效性, 默认false-->
+        <property name="testWhileIdle" value="${redis.testWhileIdle}"/>
+        <!--连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true-->
+        <property name="blockWhenExhausted" value="${redis.blockWhenExhausted}"/>
+        <!--是否启用pool的jmx管理功能, 默认true-->
+        <property name="jmxEnabled" value="${redis.jmxEnabled}"/>
+        <!--是否启用后进先出, 默认true-->
+        <property name="lifo" value="${redis.lifo}"/>
+    </bean>
+
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig" />
+        <constructor-arg index="1" value="${redis.host}"/>
+        <constructor-arg index="2" value="${redis.port}"/>
+        <constructor-arg index="3" value="${redis.timeout}"/>
+    </bean>
+
+</beans>

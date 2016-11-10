@@ -1,4 +1,4 @@
-package com.lewis.master.common;
+package com.lewis.master.common.enumer;
 
 /**
  * Created by Administrator on 2016/11/9.

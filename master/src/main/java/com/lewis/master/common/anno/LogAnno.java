@@ -1,5 +1,7 @@
 package com.lewis.master.common.anno;
 
+import com.lewis.master.common.vo.ResponseVo;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -12,6 +14,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LogAnno {
+
+     Class<?> returnType() default ResponseVo.class;
 
     /**
      * whether to record the time spent
