@@ -2,6 +2,7 @@ package com.lewis.master.common.aop;
 
 
 import com.lewis.master.common.anno.LogAnno;
+import com.lewis.master.common.utils.AopUtil;
 import com.lewis.master.common.utils.ArrayUtil;
 import com.lewis.master.common.utils.JsonUtil;
 import com.lewis.master.common.vo.ResponseVo;
@@ -26,11 +27,7 @@ public class LogAspect {
     @Around(value = "@annotation(logAnno)", argNames = "joinPoint,logAnno")
     public Object doLog(ProceedingJoinPoint joinPoint, LogAnno logAnno) {
         Signature signature = joinPoint.getSignature();
-        Class returnType = null;
-        if (signature != null && signature instanceof MethodSignature) {
-            MethodSignature methodSignature = (MethodSignature) signature;
-            returnType = methodSignature.getReturnType();
-        }
+        Class returnType = AopUtil.getReturnTypeOfJoinPoint(joinPoint);
         boolean alreadyDoLogRequestParam = false;
         StringBuilder sb = new StringBuilder();
         Object returnResult = null;
