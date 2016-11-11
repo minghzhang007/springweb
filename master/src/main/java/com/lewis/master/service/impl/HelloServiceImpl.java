@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class HelloServiceImpl implements IHelloService {
 
-    @LogAnno()
+    @LogAnno
     public Student getStudent(int id) {
         Student student = new Student();
         student.setId(id);

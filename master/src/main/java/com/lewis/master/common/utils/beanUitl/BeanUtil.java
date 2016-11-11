@@ -130,10 +130,17 @@ public final class BeanUtil {
 
     public static Object getFieldValue(Object obj, Field field) {
         if (obj != null && field != null) {
+            boolean accessible = false;
             try {
+                accessible = field.isAccessible();
+                if (!accessible) {
+                    field.setAccessible(true);
+                }
                 return field.get(obj);
             } catch (IllegalAccessException e) {
                 logger.error("getFieldValue occur {},param is {},field is {}", e.getCause(), JsonUtil.toString(obj), field.getName());
+            }finally {
+                field.setAccessible(accessible);
             }
         }
         return null;

@@ -1,6 +1,9 @@
 package com.lewis.master.common.utils;
 
 import org.apache.commons.collections.ListUtils;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -18,5 +21,18 @@ public class ListUtil extends ListUtils {
     public  static <T> boolean  isNotEmpty(List<T> list){
         return !isEmpty(list);
     }
+
+    public static <T> List<T> newArrayList(){
+        return new ArrayList<T>();
+    }
+
+    public static <T> List<T> newArrayList(int size){
+        return new ArrayList<T>(size);
+    }
+
+    public static <T> List<T> newLinkedList(){
+        return new LinkedList<T>();
+    }
+
 
 }

@@ -63,11 +63,15 @@ public class CacheAspect {
     private String getCacheKey(CacheAnno cacheAnno, Object param) {
         StringBuilder sb = new StringBuilder(cacheAnno.keyPrefix());
         if (param != null) {
-            Field[] fields = BeanUtil.getFields(param.getClass(), true);
-            if (ArrayUtil.isNotEmpty(fields)) {
-                for (Field field : fields) {
-                    if (field.getAnnotation(IgnoreCacheField.class) == null) {
-                        sb.append("_").append(BeanUtil.getFieldValue(param, field));
+            if (param instanceof String || param instanceof Integer) {
+                sb.append("_").append(param);
+            }else{
+                Field[] fields = BeanUtil.getFields(param.getClass(), true);
+                if (ArrayUtil.isNotEmpty(fields)) {
+                    for (Field field : fields) {
+                        if (field.getAnnotation(IgnoreCacheField.class) == null) {
+                            sb.append("_").append(BeanUtil.getFieldValue(param, field));
+                        }
                     }
                 }
             }

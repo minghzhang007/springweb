@@ -43,5 +43,6 @@
     </bean>
 
     <bean id="jackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
-
+    <!--要想拦截Controller aop的配置必须在spring-mvc的配置文件中配置，不能在spring的文件中-->
+    <import resource="spring-aop.xml"/>
 </beans>

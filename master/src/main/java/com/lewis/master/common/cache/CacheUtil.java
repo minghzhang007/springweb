@@ -89,9 +89,14 @@ public class CacheUtil {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
+            long beginTime = System.currentTimeMillis();
             Map<String, String> map = jedis.hgetAll(key);
+            System.out.println("redis hgetAll costTime #"+(System.currentTimeMillis()-beginTime));
             if (MapUtil.isNotEmpty(map)) {
-                return BeanUtil.map2Bean(map, type);
+                beginTime = System.currentTimeMillis();
+                T t = BeanUtil.map2Bean(map, type);
+                System.out.println("map2Bean costTime #"+(System.currentTimeMillis()-beginTime));
+                return t;
             }
         } catch (JedisConnectionException e) {
             logger.error("setCache({})", new Object[]{key});

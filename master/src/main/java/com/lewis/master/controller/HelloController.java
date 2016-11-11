@@ -1,5 +1,6 @@
 package com.lewis.master.controller;
 
+import com.lewis.master.common.anno.CacheAnno;
 import com.lewis.master.common.anno.Json;
 import com.lewis.master.common.anno.ResponseJson;
 import com.lewis.master.common.cache.CacheUtil;
@@ -9,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/11/3.
@@ -25,7 +24,6 @@ public class HelloController {
     @Resource
     private IHelloService helloService;
 
-
     @RequestMapping("/say")
     public String sayHello(String name){
         System.out.println("got here");
@@ -34,12 +32,10 @@ public class HelloController {
 
     @RequestMapping("/student")
     @ResponseJson
+    @CacheAnno(keyPrefix = "student",exprie = 600)
     public Student testJson(@Json Student student){
-        List<String> hobbies = new LinkedList<String>();
-        hobbies.add("singing");
-        hobbies.add("dancing");
-        hobbies.add("reading");
-        return student;
+        Student wo = helloService.getStudent(500);
+        return wo;
     }
 
     @RequestMapping("/get")
