@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -192,5 +193,24 @@ public class ScannerClassUtil {
 
     private static boolean isJarFile(String fileName) {
         return fileName.endsWith(JAR_FILE_EXT);
+    }
+
+    public static List<File> getChildrenFiles(File rootFile){
+        List<File> list = new LinkedList<File>();
+        if (rootFile.isDirectory()) {
+            File[] files = rootFile.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        list.addAll(getChildrenFiles(file));
+                    }else{
+                        list.add(file);
+                    }
+                }
+            }
+        }else{
+            list.add(rootFile);
+        }
+        return list;
     }
 }
