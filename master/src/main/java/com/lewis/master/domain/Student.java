@@ -55,7 +55,18 @@ public class Student {
     public void setHobbys(List<String> hobbys) {
         this.hobbys = hobbys;
     }
+    // 额外的操作，方法
+    public void call(String message) {
+        System.out.println("丈夫的call：" + message);
+    }
 
+    public void look(){
+        System.out.println("发现发廊");
+    }
+
+    public void playDOTA(){
+        System.out.println("这个不用解释了吧~DOTA");
+    }
     @Override
     public String toString() {
         return "Student{" +

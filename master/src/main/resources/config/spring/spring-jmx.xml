@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 暴露监控设备 -->
+    <bean id="export" class="org.springframework.jmx.export.MBeanExporter">
+        <property name="beans">
+            <map>
+                <entry key="bean:name=Student" value-ref="student"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="student" class="com.lewis.master.domain.Student"/>
+
+    <bean class="org.springframework.jmx.support.ConnectorServerFactoryBean" depends-on="rmiRegistry">
+        <property name="objectName" value="connector:name=rmi"/>
+        <!-- 远程连接的地址 -->
+        <property name="serviceUrl" value="service:jmx:rmi://localhost/jndi/rmi://localhost:8081/master"/>
+    </bean>
+
+    <!-- 使用JNDI-RMI的方式进行远程连接通讯,并且配置占用端口号 -->
+    <bean id="rmiRegistry" class="org.springframework.remoting.rmi.RmiRegistryFactoryBean">
+        <property name="port" value="8081"/>
+    </bean>
+</beans>

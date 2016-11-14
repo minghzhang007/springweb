@@ -23,7 +23,6 @@ public class DateFormatUtil {
 
     public static String date2String(Date date){
         SimpleDateFormat simpleDateFormat = dateThreadLocal.get();
-        System.out.println("currentThread = "+Thread.currentThread().getId());
         if (simpleDateFormat == null) {
             simpleDateFormat = new SimpleDateFormat(dateString);
             dateThreadLocal.set(simpleDateFormat);
@@ -33,7 +32,6 @@ public class DateFormatUtil {
 
     public static Date string2Date(String dateString){
         SimpleDateFormat simpleDateFormat = dateThreadLocal.get();
-        System.out.println("currentThread = "+Thread.currentThread().getId());
         if (simpleDateFormat == null) {
             simpleDateFormat = new SimpleDateFormat(dateString);
             dateThreadLocal.set(simpleDateFormat);
