@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/jdk8/jdk8.iml" filepath="$PROJECT_DIR$/jdk8/jdk8.iml" />
       <module fileurl="file://$PROJECT_DIR$/master/master.iml" filepath="$PROJECT_DIR$/master/master.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/springweb.iml" filepath="$PROJECT_DIR$/.idea/springweb.iml" />
     </modules>
