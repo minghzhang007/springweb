@@ -38,6 +38,15 @@ public class HelloController {
         return wo;
     }
 
+
+    @RequestMapping("/getStudent")
+    @ResponseJson
+    //@CacheAnno(keyPrefix = "getStudent",exprie = 600)
+    public Student testJson(){
+        Student wo = helloService.getStudent(500);
+        return wo;
+    }
+
     @RequestMapping("/get")
     @ResponseJson
     public Student getStudent(){

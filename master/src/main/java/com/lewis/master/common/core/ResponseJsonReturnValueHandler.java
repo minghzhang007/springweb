@@ -26,12 +26,18 @@ public class ResponseJsonReturnValueHandler implements HandlerMethodReturnValueH
 
     public void handleReturnValue(Object returnValue, MethodParameter returnType, ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
         mavContainer.setRequestHandled(true);
-        ResponseVo responseVo = new ResponseVo();
-        responseVo.setData(returnValue);
-        responseVo.setMsg("OK");
-        responseVo.setSuccess(true);
-        responseVo.setResultCode(0);
+        ResponseVo responseVo = null;
+        if (!(returnValue instanceof ResponseVo)) {
+            responseVo = new ResponseVo();
+            responseVo.setData(returnValue);
+            responseVo.setMsg("OK");
+            responseVo.setSuccess(true);
+            responseVo.setResultCode(0);
+        }else {
+            responseVo = (ResponseVo)returnValue;
+        }
         HttpServletResponse response = webRequest.getNativeResponse(HttpServletResponse.class);
+        response.setHeader("Access-Control-Allow-Origin","*");
         ServletServerHttpResponse outputMessage = new ServletServerHttpResponse(response);
         MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON, Collections.singletonMap("charset", "utf-8"));
         httpMessageConverter.write(responseVo, mediaType,outputMessage);

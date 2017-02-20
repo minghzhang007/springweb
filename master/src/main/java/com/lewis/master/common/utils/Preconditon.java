@@ -1,4 +1,4 @@
-package com.lewis.master.common.core;
+package com.lewis.master.common.utils;
 
 /**
  * Created by zhangminghua on 2016/11/10.

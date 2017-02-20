@@ -1,6 +1,6 @@
 package com.lewis.master.common.utils.beanUitl;
 
-import com.lewis.master.common.core.Preconditon;
+import com.lewis.master.common.utils.Preconditon;
 import com.lewis.master.common.utils.*;
 import com.lewis.master.domain.Student;
 import org.slf4j.Logger;

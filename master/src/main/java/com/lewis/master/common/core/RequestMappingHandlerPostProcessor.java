@@ -1,5 +1,6 @@
 package com.lewis.master.common.core;
 
+import com.lewis.master.common.utils.ListUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -18,6 +19,8 @@ public class RequestMappingHandlerPostProcessor implements BeanPostProcessor {
 
     private List<Class<HandlerMethodReturnValueHandler>> removedReturnValueHandlers = new ArrayList<Class<HandlerMethodReturnValueHandler>>();
 
+    private List<Class<HandlerMethodReturnValueHandler>> addedReturnValueHandlers = new ArrayList<Class<HandlerMethodReturnValueHandler>>();
+
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
     }
@@ -27,8 +30,44 @@ public class RequestMappingHandlerPostProcessor implements BeanPostProcessor {
             RequestMappingHandlerAdapter adapter = (RequestMappingHandlerAdapter) bean;
             removeArgumentResolvers(adapter.getArgumentResolvers(), adapter);
             removeReturnValueHandlers(adapter.getReturnValueHandlers(), adapter);
+            addReturnValueHandlers(adapter.getReturnValueHandlers(),adapter);
         }
         return bean;
+    }
+
+    /**
+     * 添加指定的HandlerMethodReturnValueHandler
+     * @param returnValueHandlers
+     * @param adapter
+     */
+    private void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers, RequestMappingHandlerAdapter adapter) {
+        if (ListUtil.isNotEmpty(addedReturnValueHandlers)) {
+            List<HandlerMethodReturnValueHandler> totalReturnValueHandlers = new ArrayList<HandlerMethodReturnValueHandler>(16);
+            totalReturnValueHandlers.addAll(returnValueHandlers);
+            try {
+                for (Class<HandlerMethodReturnValueHandler> addedReturnValueHandler : addedReturnValueHandlers) {
+                    if (!containsElement(totalReturnValueHandlers, addedReturnValueHandler)) {
+                        totalReturnValueHandlers.add(addedReturnValueHandler.newInstance());
+                    }
+                }
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            adapter.setReturnValueHandlers(totalReturnValueHandlers);
+        }
+    }
+
+    private boolean containsElement(List<HandlerMethodReturnValueHandler> returnValueHandlers, Class<HandlerMethodReturnValueHandler> addedReturnValueHandler) {
+        if (ListUtil.isNotEmpty(returnValueHandlers) && addedReturnValueHandler != null) {
+            for (HandlerMethodReturnValueHandler returnValueHandler : returnValueHandlers) {
+                if (returnValueHandler.getClass().equals(addedReturnValueHandler)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -84,5 +123,13 @@ public class RequestMappingHandlerPostProcessor implements BeanPostProcessor {
 
     public void setRemovedReturnValueHandlers(List<Class<HandlerMethodReturnValueHandler>> removedReturnValueHandlers) {
         this.removedReturnValueHandlers = removedReturnValueHandlers;
+    }
+
+    public List<Class<HandlerMethodReturnValueHandler>> getAddedReturnValueHandlers() {
+        return addedReturnValueHandlers;
+    }
+
+    public void setAddedReturnValueHandlers(List<Class<HandlerMethodReturnValueHandler>> addedReturnValueHandlers) {
+        this.addedReturnValueHandlers = addedReturnValueHandlers;
     }
 }

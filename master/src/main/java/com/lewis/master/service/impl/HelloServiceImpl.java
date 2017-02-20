@@ -1,6 +1,5 @@
 package com.lewis.master.service.impl;
 
-import com.lewis.master.common.anno.LogAnno;
 import com.lewis.master.domain.Student;
 import com.lewis.master.service.IHelloService;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import java.util.List;
 @Service
 public class HelloServiceImpl implements IHelloService {
 
-    @LogAnno
     public Student getStudent(int id) {
         Student student = new Student();
         student.setId(id);

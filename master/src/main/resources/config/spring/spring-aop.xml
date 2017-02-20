@@ -14,4 +14,14 @@
     则使用jdk的动态代理；如果代理目标是类（没有实现接口的类），则使用cglib进行动态代理-->
     <aop:aspectj-autoproxy proxy-target-class="false" />
 
+    <!--<bean id="aspect" class="com.lewis.master.common.aop.TestAspect"/>
+
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="pointCut"
+                      expression="execution(* com.lewis.master.service.impl.HelloServiceImpl.getStudent(..))"/>
+        <aop:aspect ref="aspect">
+            <aop:before method="doBefore" pointcut-ref="pointCut"/>
+            <aop:after method="doAfter" pointcut-ref="pointCut"/>
+        </aop:aspect>
+    </aop:config>-->
 </beans>
