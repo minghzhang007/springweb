@@ -2,8 +2,10 @@ package com.lewis.master.service.impl;
 
 import com.lewis.master.domain.Student;
 import com.lewis.master.service.IHelloService;
+import com.lewis.master.service.MyService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,9 @@ import java.util.List;
  */
 @Service
 public class HelloServiceImpl implements IHelloService {
+
+    @Resource
+    private MyService myService;
 
     public Student getStudent(int id) {
         Student student = new Student();
@@ -24,6 +29,15 @@ public class HelloServiceImpl implements IHelloService {
         hobbys.add("dancing");
         hobbys.add("reading");
         student.setHobbys(hobbys);
+        myService.test();
         return student;
+    }
+
+    public MyService getMyService() {
+        return myService;
+    }
+
+    public void setMyService(MyService myService) {
+        this.myService = myService;
     }
 }

@@ -6,6 +6,7 @@ import com.lewis.master.common.anno.ResponseJson;
 import com.lewis.master.common.cache.CacheUtil;
 import com.lewis.master.domain.Student;
 import com.lewis.master.service.IHelloService;
+import com.lewis.master.service.TestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,6 +25,9 @@ public class HelloController {
     @Resource
     private IHelloService helloService;
 
+    @Resource
+    private TestService testService;
+
     @RequestMapping("/say")
     public String sayHello(String name){
         System.out.println("got here");
@@ -32,9 +36,11 @@ public class HelloController {
 
     @RequestMapping("/student")
     @ResponseJson
-    @CacheAnno(keyPrefix = "student",exprie = 600)
+    //@CacheAnno(keyPrefix = "student",exprie = 600)
     public Student testJson(@Json Student student){
         Student wo = helloService.getStudent(500);
+
+        testService.sayHello();
         return wo;
     }
 
