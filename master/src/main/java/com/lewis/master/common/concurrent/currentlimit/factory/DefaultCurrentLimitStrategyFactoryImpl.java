@@ -15,6 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultCurrentLimitStrategyFactoryImpl implements CurrentLimitStrategyFactory {
 
+    private static DefaultCurrentLimitStrategyFactoryImpl instance = new DefaultCurrentLimitStrategyFactoryImpl();
+
     /**
      * 限流策略容器: 每个限流策略枚举，只有一个限流策略实例
      */
@@ -51,4 +53,7 @@ public class DefaultCurrentLimitStrategyFactoryImpl implements CurrentLimitStrat
         }
     }
 
+    public static DefaultCurrentLimitStrategyFactoryImpl getInstance() {
+        return instance;
+    }
 }

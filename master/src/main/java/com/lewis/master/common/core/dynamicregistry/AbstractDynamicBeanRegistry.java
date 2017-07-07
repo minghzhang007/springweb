@@ -16,7 +16,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 public abstract class AbstractDynamicBeanRegistry {
 
     public void dynamicRegistry(Class registryType){
-        //String beanName = registryType.getSimpleName();
         String beanName = registryType.getSimpleName().substring(0,1).toLowerCase()+registryType.getSimpleName().substring(1);
         ApplicationContext appContext = AppContext.getContext();
         if(appContext instanceof ConfigurableApplicationContext){
@@ -30,6 +29,7 @@ public abstract class AbstractDynamicBeanRegistry {
                 listableBeanFactory.registerBeanDefinition(beanName,beanDefinitionBuilder.getRawBeanDefinition());
             }
         }
+
     }
 
     protected abstract void addPropertyReference(BeanDefinitionBuilder beanDefinitionBuilder);
