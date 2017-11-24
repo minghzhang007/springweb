@@ -44,7 +44,7 @@ public class HelloController {
 
     @RequestMapping("/student")
     @ResponseJson
-    //@CacheAnno(keyPrefix = "student",exprie = 600)
+    @CacheAnno(keyPrefix = "student",exprie = 600)
     public Student testJson(@Json Student student){
         Student wo = helloService.getStudent(500);
 

@@ -1,6 +1,6 @@
 package com.lewis.master.service.impl;
 
-import com.lewis.master.common.anno.Replaceable;
+import com.lewis.master.common.anno.ReplaceAble;
 import com.lewis.master.common.concurrent.currentlimit.CurrentLimitEnum;
 import com.lewis.master.common.concurrent.currentlimit.factory.DefaultCurrentLimitStrategyFactoryImpl;
 import com.lewis.master.common.concurrent.currentlimit.strategy.CurrentLimitStrategy;
@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class HelloServiceImpl implements IHelloService {
 
-    @Replaceable(name = "currentLimitStrategy")
+    @ReplaceAble(name = "currentLimitStrategy")
     private CurrentLimitStrategy currentLimitStrategy = DefaultCurrentLimitStrategyFactoryImpl.getInstance().getCurrentLimitStrategy(CurrentLimitEnum.CONCURRENT_LIMIT);
 
     @Resource
